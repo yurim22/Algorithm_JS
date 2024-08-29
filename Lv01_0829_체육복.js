@@ -5,6 +5,71 @@
  */
 
 function solution(n, lost, reserve) {
+  var answer = 0;
+
+  // 최소 수업 들을 수 있는 사람 수
+  const minStudents = n - lost.length;
+
+  // 배열 정렬
+  const sortedArray = (arr) => {
+    return arr.sort((a, b) => {
+      return a - b;
+    });
+  };
+
+  const removeDuplicate = (arr1, arr2) => {
+    let duplicateCount = 0;
+
+    const newArr1 = arr1.filter((num) => {
+      if (arr2.includes(num)) {
+        duplicateCount++;
+        return false; // 중복된 경우 제거
+      }
+      return true;
+    });
+
+    const newArr2 = arr2.filter((num) => {
+      if (arr1.includes(num)) {
+        // 이미 카운트된 중복 요소는 다시 카운트하지 않음
+        return false; // 중복된 경우 제거
+      }
+      return true;
+    });
+
+    return { arr1: newArr1, arr2: newArr2, duplicateCount };
+  };
+
+  // 중복제거
+  rmvDup = removeDuplicate(lost, reserve);
+
+  answer = minStudents + rmvDup.duplicateCount;
+
+  lost = sortedArray(rmvDup.arr1);
+  reserve = sortedArray(rmvDup.arr2);
+
+  for (let i = 0; i < reserve.length; i++) {
+    const nextStu = reserve[i] + 1;
+    const prevStu = reserve[i] - 1;
+
+    if (lost.length !== 0 && prevStu > 0 && lost.includes(prevStu)) {
+      answer++;
+      lost = lost.filter((item) => item !== prevStu);
+
+      continue;
+    }
+
+    if (lost.length !== 0 && nextStu <= n && lost.includes(nextStu)) {
+      answer++;
+      lost = lost.filter((item) => item !== nextStu);
+
+      continue;
+    }
+  }
+
+  return answer;
+}
+
+function solution(n, lost, reserve) {
   return (
     n -
     lost.filter((a) => {
