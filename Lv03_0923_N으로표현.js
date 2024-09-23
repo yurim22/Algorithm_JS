@@ -39,3 +39,6 @@ function solution(N, number) {
   }
   return -1;
 }
+
+// DP를 활용하는 문제
+// 가장 작은 범위를 key 로 잡고 진행
