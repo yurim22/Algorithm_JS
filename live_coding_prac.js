@@ -1,0 +1,179 @@
+// 1) duplicate([1, 2, 3, 4, 5]);
+function duplicate(arr) {
+  if (!arr.length) return;
+
+  return arr.concat(arr);
+}
+
+console.log("1", duplicate([1, 2, 3, 4, 5]));
+//return [1,2,3,4,5,1,2,3,4,5]
+
+/**
+ * 2)
+ * sum(1)(2)(); /// 3
+sum(1)(2)(3)(4)(); // 10
+
+mul(2)(3)(4); // 24
+mul(4)(3)(4); // 48
+ */
+
+const sum = function (a) {
+  return function (b) {
+    if (b) {
+      return sum(a + b);
+    }
+
+    return a;
+  };
+};
+
+// 반환값이 계속 새로운 함수를 반환하기 때문에 결과값도 함수가 되는 것이다.
+const mul2 = function (a) {
+  return function (b) {
+    return mul2(a * b);
+  };
+};
+
+const mul = function (a) {
+  return function (b) {
+    return function (c) {
+      return a * b * c;
+    };
+  };
+};
+
+console.log(sum(1)(2)(3));
+console.log(mul(2)(3)(4));
+
+/**
+ * 3)
+ * var addSix = createBase(6);
+addSix(10); // returns 16
+addSix(21); // returns 27
+ */
+
+function createBase(base) {
+  return function (num) {
+    return num + base;
+  };
+}
+
+var addSix = createBase(6);
+console.log(addSix(10));
+
+/**
+ * 4)
+ * const delay = () => {}
+
+const main = async() => {
+	console.log('1번')
+  	delay(4)
+    // 첫번째 콘솔('1번')이 찍힌 후 4초 후에 찍힘`
+  	// output 
+  	// '1번'
+    // ...4초 후...
+  	// '2번!!!'
+    console.log('2번!!!')
+  };
+main();
+
+ */
+
+const delay = (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, sec * 1000);
+  });
+};
+
+const main = async () => {
+  console.log("1번");
+  //   await delay(4);
+  console.log("2번!!!");
+};
+
+main();
+
+/**
+ * array의 중복 요소를 제거한 뒤 출력하세요.
+ */
+
+const arrDup = [1, 1, 1, 2, 2, 3, 3, 3, 2];
+const removeDup = new Set(arrDup);
+
+console.log([...removeDup]);
+
+const exampleArray = [4, 2, 9, 2, 4, 6, 8, 9];
+
+const uniqueArray = exampleArray.filter((item, index) => {
+  return exampleArray.indexOf(item) === index;
+});
+
+console.log(uniqueArray);
+
+/**
+ * 문자열의 중복 요소를 제거한 뒤 출력하세요.
+ */
+const exampleStr = "aabbbeedudaacca";
+
+const arrStr = [...exampleStr];
+const uniqueStr = arrStr
+  .filter((item, index) => {
+    return arrStr.indexOf(item) === index;
+  })
+  .join("");
+
+console.log(uniqueStr);
+
+/**
+ * 주어진 문자열을 뒤집어 출력하세요.
+
+글자별로 뒤집기
+단어별로 뒤집기
+ */
+
+let string = "Hello! Welcome to my Velog. Ask me anything.";
+
+const reverseString = (string, seperate) => {
+  const splitArr = string.split(seperate);
+
+  let newArr = [];
+
+  for (let i = splitArr.length; i >= 0; i--) {
+    newArr.push(splitArr[i]);
+  }
+  console.log(newArr.join(seperate));
+
+  return splitArr.reverse().join(seperate);
+};
+
+console.log(reverseString(string, ""));
+console.log(reverseString(string, " "));
+
+/**
+ * 숫자형 array를 매개변수로 갖게 하고, Math.max를 활용해 최댓값을 출력하세요.
+(단, 스프레드 연산자를 쓰지 않고)
+ */
+
+const exampleArray2 = [4, 2, 8, 1, 1, 3];
+
+const maxNum = exampleArray2.reduce((acc, curr) => {
+  return (acc = Math.max(acc, curr));
+}, -Infinity);
+console.log(maxNum);
+console.log(...exampleArray);
+console.log(Math.max(...exampleArray));
+
+/**
+ * 어떤 데이터의 타입이 array인지 아닌지 판별하세요.
+ */
+
+let example01 = [];
+let example02 = ["Hi"];
+let example03 = "Hi";
+let example04 = 17;
+
+const isArray = (arr) => {
+  return Array.isArray(arr);
+};
+console.log(isArray(example01));
+console.log(isArray(example04));
