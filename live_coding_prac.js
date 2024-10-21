@@ -198,3 +198,41 @@ const calculateDate = (a, b) => {
 };
 
 console.log(calculateDate(5, 24));
+
+/**
+ * 문제 설명:
+사용자 목록이 주어졌을 때, 이를 조건에 맞게 필터링하고 정렬하는 기능을 구현하세요.
+
+요구 사항:
+주어진 사용자 목록은 이름, 나이, 성별로 구성됩니다.
+이름을 기준으로 오름차순 또는 내림차순으로 정렬할 수 있어야 합니다.
+나이 기준으로 특정 나이 이상의 사용자만 필터링할 수 있어야 합니다.
+ */
+
+const users = [
+  { name: "Alice", age: 30, gender: "female" },
+  { name: "Bob", age: 25, gender: "male" },
+  { name: "Charlie", age: 35, gender: "male" },
+  { name: "Diana", age: 28, gender: "female" },
+];
+
+function filterAndSortUsers(users, minAge, sortBy) {
+  // 여기에 코드를 작성하세요
+  const filterByAge = users.filter((user) => user.age >= minAge);
+
+  const sortByName = filterByAge.sort((a, b) => {
+    if (sortBy === "asc") {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+    } else {
+      if (a.name > b.name) return -1;
+      if (a.name < b.name) return 1;
+    }
+  });
+
+  console.log(sortByName);
+}
+
+// 예시 사용
+console.log(filterAndSortUsers(users, 30, "asc")); // [{name: 'Charlie', ...}, {name: 'Alice', ...}]
+console.log(filterAndSortUsers(users, 20, "desc")); // 정렬 및 필터링 결과 출력
