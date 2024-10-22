@@ -33,3 +33,5 @@ var removeStars = function (s) {
 
   return stack.join("");
 };
+
+// O(n)
